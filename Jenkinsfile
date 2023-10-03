@@ -22,7 +22,7 @@ pipeline {
         }
       }
     }
-  stage('Gmail'){
+   stage('Gmail'){
 
 	steps{
 		emailext body: "*${currentBuild.currentResult}:* Job Name: 
@@ -31,14 +31,14 @@ pipeline {
 		subject: 'Declarative Pipeline Build Status',
 		to: 'jeelani.yasmin@gmail.com'
 	}
-  }	  
   }
-  post {
+	
+}
+post {
     always {
       sh 'docker rm -f mypycont'
       sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
     }
   }
   
-   
 }
