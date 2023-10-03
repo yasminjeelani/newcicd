@@ -4,7 +4,6 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        
         sh 'docker build -t my-flask .'
         sh 'docker tag my-flask $DOCKER_BFLASK_IMAGE'
       }
@@ -22,23 +21,19 @@ pipeline {
         }
       }
     }
-   stage('Gmail'){
-
-	steps{
-		emailext body: "*${currentBuild.currentResult}:* Job Name: 
-                ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More 
-                information at: ${env.BUILD_URL}",
-		subject: 'Declarative Pipeline Build Status',
-		to: 'jeelani.yasmin@gmail.com'
-	}
+    stage('Gmail') {
+      steps {
+        emailext body: "*${currentBuild.currentResult}:* Job Name: ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More information at: ${env.BUILD_URL}",
+          subject: 'Declarative Pipeline Build Status',
+          to: 'jeelani.yasmin@gmail.com'
+      }
+    }
   }
-	
-}
-post {
+
+  post {
     always {
       sh 'docker rm -f mypycont'
       sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
     }
   }
-  
 }
