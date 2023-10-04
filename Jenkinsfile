@@ -21,13 +21,7 @@ pipeline {
         }
       }
     }
-    stage('Gmail') {
-      steps {
-        emailext body: "*${currentBuild.currentResult}:* Job Name: ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More information at: ${env.BUILD_URL}",
-          subject: 'Declarative Pipeline Build Status',
-          to: 'jeelani.yasmin@gmail.com'
-      }
-    }
+    
   }
 
   post {
@@ -37,12 +31,11 @@ pipeline {
     } */
   
         always{
-                archiveArtifacts artifacts: '*.csv', onlyIfSuccessful: true
+               
                 
                 emailext to: "jeelani.yasmin@gmail.com",
                 subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
                 body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
-                attachmentsPattern: '*.csv'
                 
            
             }
