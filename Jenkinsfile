@@ -24,21 +24,12 @@ pipeline {
     
   }
 
-  post {
-    /* always {
-      sh 'docker rm -f mypycont'
-      sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
-    } */
-  
-        always {
-               
-                
-                emailext to: "jeelani.yasmin@gmail.com",
-                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
-                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}"
-                
-            }
-  }
+post{
+      always{
+            emailext to: "naivetechblog@gmail.com",
+            subject: "Test Email",
+            body: "Test"
+        }
 }
     
 
