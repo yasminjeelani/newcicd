@@ -1,6 +1,6 @@
 FROM python:3.9-alpine
 
-WORKDIR /flask_app
+WORKDIR /app
 
 COPY requirements.txt .
 
