@@ -9,6 +9,7 @@ COPY requirements.txt /app
 
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
+Run pip install pytest
 
 # Copy the application code into the container at /app
 COPY app /app/app
