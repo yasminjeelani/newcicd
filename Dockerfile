@@ -13,6 +13,7 @@ Run pip install pytest
 
 # Copy the application code into the container at /app
 COPY app /app/app
+COPY tests/ app/tests/
 
 # Expose the port that the app will run on
 EXPOSE 5000
