@@ -35,5 +35,26 @@ pipeline {
       sh 'docker rm -f mypycont'
       sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
     }
+    failure {
+            script {
+                emailext(
+                    subject: "Build Failed: ${currentBuild.fullDisplayName}",
+                    body: "The build ${currentBuild.fullDisplayName} failed. Please check the console output for more details.",
+                    to: 'jeelani.yasmin@gmail.com',
+                    from: 'jeelani.yasmin@gmail.com'
+                )
+            }
+        }
+        success {
+            script {
+                emailext(
+                    subject: "Build Successful: ${currentBuild.fullDisplayName}",
+                    body: "The build ${currentBuild.fullDisplayName} was successful.",
+                    to: 'jeelani.yasmin@gmail.com',
+                    from: 'jeelani.yasmin@gmail.com'
+                )
+            }
+        }
+
   }
 }
