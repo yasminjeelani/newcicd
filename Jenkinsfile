@@ -37,22 +37,16 @@ pipeline {
     }
     failure {
             script {
-                emailext(
-                    subject: "Build Failed: ${currentBuild.fullDisplayName}",
-                    body: "The build ${currentBuild.fullDisplayName} failed. Please check the console output for more details.",
-                    to: 'jeelani.yasmin@gmail.com',
-                    from: 'jeelani.yasmin@gmail.com'
-                )
+                emailext body: "*${currentBuild.currentResult}:* Job Name: ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More information at: ${env.BUILD_URL}",
+          subject: 'Declarative Pipeline Build Status',
+          to: 'jeelani.yasmin@gmail.com'
             }
         }
         success {
             script {
-                emailext(
-                    subject: "Build Successful: ${currentBuild.fullDisplayName}",
-                    body: "The build ${currentBuild.fullDisplayName} was successful.",
-                    to: 'jeelani.yasmin@gmail.com',
-                    from: 'jeelani.yasmin@gmail.com'
-                )
+                emailext body: "*${currentBuild.currentResult}:* Job Name: ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More information at: ${env.BUILD_URL}",
+          subject: 'Declarative Pipeline Build Status',
+          to: 'jeelani.yasmin@gmail.com'
             }
         }
 
