@@ -1,19 +1,16 @@
 # Use an official Python runtime as the base image
-FROM python:3.9-alpine
+FROM python:3.9-slim
 
-# Set the working directory in the container
-WORKDIR /flask_app
+# Set the working directory in the container to /app
+WORKDIR /app
 
-# Copy the requirements file into the container at /app
-COPY requirements.txt .
+# Add the current directory contents into the container at /app
+ADD . /app
 
-# Install the required packages
-RUN pip install --no-cache-dir -r requirements.txt
-Run pip install pytest
-
-# Copy the application code into the container at /app
-COPY app .
-COPY tests/ app/tests/
+# Install any needed packages specified in requirements.txt
+RUN pip install --upgrade pip \
+    && pip install MarkupSafe==2.0.1 \
+    && pip install -r requirements.txt
 
 # Expose the port that the app will run on
 EXPOSE 5000
