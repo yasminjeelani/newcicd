@@ -8,9 +8,10 @@ COPY requirements.txt .
 
 # Install the required packages
 RUN pip install --no-cache-dir -r requirements.txt
+Run pip install pytest
 RUN pip install markupsafe==2.0.1
 
-Run pip install pytest
+
 
 # Copy the application code into the container at /app
 COPY app .
