@@ -26,7 +26,7 @@ pipeline {
 
 post{
       always{
-            emailext to: "naivetechblog@gmail.com",
+            emailext to: "jeelani.yasmin@gmail.com",
             subject: "Test Email",
             body: "Test"
         }
