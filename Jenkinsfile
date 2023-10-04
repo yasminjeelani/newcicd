@@ -35,20 +35,28 @@ pipeline {
       sh 'docker rm -f mypycont'
       sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
     }
-    failure {
-            script {
-                emailext body: "*${currentBuild.currentResult}:* Job Name: ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More information at: ${env.BUILD_URL}",
-          subject: 'Declarative Pipeline Build Status',
-          to: 'jeelani.yasmin@gmail.com'
-            }
-        }
+  post {
         success {
-            script {
-                emailext body: "*${currentBuild.currentResult}:* Job Name: ${env.JOB_NAME} || Build Number: ${env.BUILD_NUMBER}\n More information at: ${env.BUILD_URL}",
-          subject: 'Declarative Pipeline Build Status',
-          to: 'jeelani.yasmin@gmail.com'
-            }
+            emailext subject: 'Build Successful',
+                body: 'The build was successful.',
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                to: 'youremail@example.com'
         }
+        
+        failure {
+            emailext subject: 'Build Failed',
+                body: 'The build failed.',
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                to: 'youremail@example.com'
+        }
+        
+        unstable {
+            emailext subject: 'Build Unstable',
+                body: 'The build is unstable.',
+                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
+                to: 'youremail@example.com'
+        }
+    }
 
   }
 }
