@@ -31,32 +31,22 @@ pipeline {
   }
 
   post {
-    always {
+    /* always {
       sh 'docker rm -f mypycont'
       sh 'docker run --name mypycont -d -p 3000:5000 my-flask'
-    }
-  post {
-        success {
-            emailext subject: 'Build Successful',
-                body: 'The build was successful.',
-                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
-                to: 'youremail@example.com'
-        }
-        
-        failure {
-            emailext subject: 'Build Failed',
-                body: 'The build failed.',
-                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
-                to: 'youremail@example.com'
-        }
-        
-        unstable {
-            emailext subject: 'Build Unstable',
-                body: 'The build is unstable.',
-                recipientProviders: [[$class: 'CulpritsRecipientProvider']],
-                to: 'youremail@example.com'
-        }
+    } */
+  
+        always{
+                archiveArtifacts artifacts: '*.csv', onlyIfSuccessful: true
+                
+                emailext to: "jeelani.yasmin@gmail.com",
+                subject: "jenkins build:${currentBuild.currentResult}: ${env.JOB_NAME}",
+                body: "${currentBuild.currentResult}: Job ${env.JOB_NAME}\nMore Info can be found here: ${env.BUILD_URL}",
+                attachmentsPattern: '*.csv'
+                
+           
+            }
     }
 
-  }
+  
 }
