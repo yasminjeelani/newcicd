@@ -23,10 +23,23 @@ pipeline {
     }
     
   }
-
-
-
+post {
+  success {
+    emailtext subject: 'Build Successfull',
+              body: 'The Build is successful',
+              to: 'yasmin@guvi.in'
+              attachlog: true
+  }
+  failure {
+    emailtext subject: 'Build Failed',
+              body: 'The Build is broken',
+              to: 'yasmin@guvi.in'
+              attachlog: true    
 }
+}
+}  
+  
+  
     
 
   
